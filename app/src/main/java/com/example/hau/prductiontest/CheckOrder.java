@@ -56,6 +56,7 @@ public class CheckOrder extends AppCompatActivity {
     private DataHolder<String> topHolder;
     private DataHolder<ItemModel> itemHolder;
     private DataHolder<Integer> buttonHolder;
+    final List<LayoutWrapper> data = new ArrayList<>();
 
     private int HANDLING = 0;
     private int HANDLED = 1;
@@ -68,7 +69,7 @@ public class CheckOrder extends AppCompatActivity {
         init();
         createHolder();
         initAdapter();
-        getOrder();
+
 
     }
 
@@ -78,7 +79,7 @@ public class CheckOrder extends AppCompatActivity {
         int[] layoutIds = {R.layout.item_top, R.layout.item_check, R.layout.item_finished};
         adapter = new SuperAdapter(this, layoutIds);
         recyclerView.setAdapter(adapter);
-
+        getOrder();
     }
 
     public  void getOrder() {
@@ -110,7 +111,7 @@ public class CheckOrder extends AppCompatActivity {
                 }
 
                 Iterator<Integer> iterator = set.iterator();
-                final List<LayoutWrapper> data = new ArrayList<>();
+                data.clear();
 
                 while(iterator.hasNext()){
                     final int id = iterator.next();
@@ -137,6 +138,7 @@ public class CheckOrder extends AppCompatActivity {
                             data.add(new LayoutWrapper(R.layout.item_finished,id,buttonHolder));
 
                             adapter.setData(data);
+                            adapter.notifyDataSetChanged();
 
 
                         }
@@ -207,6 +209,7 @@ public class CheckOrder extends AppCompatActivity {
                                         public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
                                             // 如果 e 为空，说明保存成功
 
+                                            getOrder();
                                         }
                                     });
                                 }
@@ -214,7 +217,7 @@ public class CheckOrder extends AppCompatActivity {
                         });
 
 
-                        Toast.makeText(CheckOrder.this,orderId+"确认收货",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CheckOrder.this,"确认收货",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
