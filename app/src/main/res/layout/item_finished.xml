@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="5dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:gravity="right|center"
+    android:background="@android:color/white"
+   >
+
+    <Button
+        android:id="@+id/finished_confirm"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_btn_login_selected"
+        android:text="确认收货"
+        android:textColor="@color/color_ffffff"
+        android:textSize="18dp" />
+</LinearLayout>
+</LinearLayout>

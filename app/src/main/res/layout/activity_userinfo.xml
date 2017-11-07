@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/userRelative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
+    <View
+        android:id="@+id/gray1"
+        android:layout_below="@+id/info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee" />
+
+    <LinearLayout
+        android:id="@+id/person"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/gray1"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/head"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/person_filled"
+            android:layout_centerInParent="true"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="85dp"
+                android:gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:textSize="24dp"
+                android:text="昵称:"
+                />
+        <TextView
+            android:id="@+id/nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="85dp"
+            android:gravity="bottom"
+            android:layout_marginBottom="5dp"
+            android:textSize="24dp"
+            android:text="Hau"
+            />
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/phone"
+       android:layout_below="@+id/person"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/color_eeeeee" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="horizontal">
+           <ImageView
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:layout_marginLeft="25dp"
+               android:layout_marginTop="10dp"
+               android:src="@mipmap/mobile"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="5dp"
+            android:textSize="18dp"
+            android:text="手机号:" />
+           <TextView
+               android:id="@+id/user_phone"
+               android:layout_width="wrap_content"
+               android:layout_height="match_parent"
+               android:layout_weight="1"
+               android:gravity="center_vertical"
+               android:layout_marginBottom="5dp"
+               android:textSize="18dp"
+               android:text="00000000000" />
+
+
+       </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/car"
+        android:layout_below="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/color_eeeeee" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:src="@mipmap/car"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:textSize="18dp"
+                android:text="送货地址:"
+                />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="5dp"
+                android:textSize="18dp"
+                android:text="请输入您的收货地址"
+                />
+        </LinearLayout>
+    </LinearLayout>
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:layout_below="@id/car"
+      android:orientation="vertical">
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_marginLeft="50dp"
+          android:layout_marginTop="20dp">
+          <Button
+
+              android:id="@+id/btn_logout"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:background="@drawable/bg_btn_login_selected"
+              android:text="退出登录"
+              android:textColor="@color/color_ffffff"
+              android:textSize="18dp" />
+          <View
+              android:layout_marginLeft="55dp"
+              android:layout_width="3dp"
+              android:layout_height="match_parent"
+              android:background="@color/color_eeeeee"/>
+          <Button
+              android:layout_marginLeft="50dp"
+              android:id="@+id/btn_reset"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:background="@drawable/bg_btn_login_selected"
+              android:text="重置密码"
+              android:textColor="@color/color_ffffff"
+              android:textSize="18dp" />
+
+      </LinearLayout>
+
+
+  </LinearLayout>
+
+</RelativeLayout>
