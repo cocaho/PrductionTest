@@ -128,7 +128,7 @@ public class MyShopAdapter extends RecyclerView.Adapter  {
             }
         });
 
-        viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.productionImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();

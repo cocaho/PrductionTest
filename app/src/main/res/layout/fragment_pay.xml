@@ -39,7 +39,7 @@
     <android.support.v7.widget.RecyclerView
     android:id="@+id/pay_recyclerView"
     android:layout_width="match_parent"
-    android:layout_height="280dp"
+    android:layout_height="220dp"
     >
 </android.support.v7.widget.RecyclerView>
     <LinearLayout

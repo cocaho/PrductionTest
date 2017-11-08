@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         startActivity(intent1);
                         break;
                     case R.id.four:
-                        Toast.makeText(getApplicationContext(),"前方高能，注意隐蔽，注意隐蔽!!!这不是演习，不是演习!!!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"我好像听到有人在说我帅。",Toast.LENGTH_SHORT).show();
                         break;
 
 

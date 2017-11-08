@@ -8,7 +8,7 @@
 <ImageView
     android:id="@+id/production_Img"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="300dp"
     android:scaleType="fitXY"
     android:src="@mipmap/replace"/>
     <LinearLayout

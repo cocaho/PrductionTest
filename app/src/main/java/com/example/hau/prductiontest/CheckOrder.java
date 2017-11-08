@@ -2,6 +2,7 @@ package com.example.hau.prductiontest;
 
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -103,47 +104,54 @@ public class CheckOrder extends AppCompatActivity {
         query.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                Set<Integer> set = new HashSet();
-
-                for (AVObject av : list) {
-                    int order_id = av.getInt("order_id");
-                    set.add(order_id);
+                if (list.size()==0){
+                    Toast.makeText(getApplicationContext(),"暂无记录",Toast.LENGTH_SHORT).show();
                 }
+                else{
+                    Set<Integer> set = new HashSet();
 
-                Iterator<Integer> iterator = set.iterator();
-                data.clear();
+                    for (AVObject av : list) {
+                        int order_id = av.getInt("order_id");
+                        set.add(order_id);
+                    }
 
-                while(iterator.hasNext()){
-                    final int id = iterator.next();
+                    Iterator<Integer> iterator = set.iterator();
+                    data.clear();
 
-                    AVQuery<AVObject> idQuery = new AVQuery<>("Order");
-                    idQuery.whereEqualTo("order_id", id);
-                    AVQuery<AVObject> query1 = AVQuery.and(Arrays.asList(query,idQuery));
+                    while(iterator.hasNext()){
+                        final int id = iterator.next();
 
-                    query1.findInBackground(new FindCallback<AVObject>() {
-                        @Override
-                        public void done(List<AVObject> list, AVException e) {
+                        AVQuery<AVObject> idQuery = new AVQuery<>("Order");
+                        idQuery.whereEqualTo("order_id", id);
+                        AVQuery<AVObject> query1 = AVQuery.and(Arrays.asList(query,idQuery));
 
-                            String top_time = LeanUtil.parseDate(list.get(0).getCreatedAt().toString());
-                            data.add(new LayoutWrapper(R.layout.item_top,top_time,topHolder));
+                        query1.findInBackground(new FindCallback<AVObject>() {
+                            @Override
+                            public void done(List<AVObject> list, AVException e) {
 
-                            for (AVObject avObject:list){
-                                final String name = avObject.getString("productName");
-                                final String time = LeanUtil.parseDate(avObject.getCreatedAt().toString());
-                                final int price = avObject.getInt("price");
-                                final int count = avObject.getInt("count");
-                                final int status = avObject.getInt("state");
-                                data.add(new LayoutWrapper(R.layout.item_check,new ItemModel(name,count,price,time,status) , itemHolder));
+                                String top_time = LeanUtil.parseDate(list.get(0).getCreatedAt().toString());
+                                data.add(new LayoutWrapper(R.layout.item_top,top_time,topHolder));
+
+                                for (AVObject avObject:list){
+                                    final String name = avObject.getString("productName");
+                                    final String time = LeanUtil.parseDate(avObject.getCreatedAt().toString());
+                                    final int price = avObject.getInt("price");
+                                    final int count = avObject.getInt("count");
+                                    final int status = avObject.getInt("state");
+                                    data.add(new LayoutWrapper(R.layout.item_check,new ItemModel(name,count,price,time,status) , itemHolder));
+                                }
+                                data.add(new LayoutWrapper(R.layout.item_finished,id,buttonHolder));
+
+                                adapter.setData(data);
+                                adapter.notifyDataSetChanged();
+
+
                             }
-                            data.add(new LayoutWrapper(R.layout.item_finished,id,buttonHolder));
-
-                            adapter.setData(data);
-                            adapter.notifyDataSetChanged();
-
-
-                        }
-                    });
+                        });
+                    }
                 }
+
+
 
 
             }
@@ -188,7 +196,7 @@ public class CheckOrder extends AppCompatActivity {
 
         buttonHolder = new DataHolder<Integer>() {
             @Override
-            public void bind(Context context, SuperViewHolder holder, Integer item, int position) {
+            public void bind(final Context context, SuperViewHolder holder, Integer item, int position) {
 
                 final int orderId = item;
 
@@ -196,9 +204,17 @@ public class CheckOrder extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+                        builder.setTitle("确认收货");
+                        builder.setMessage("落子无悔，三思而后行。");
+                        builder.setNegativeButton("取消", null);
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
 
                         AVQuery<AVObject> idQuery1 = new AVQuery<>("Order");
-                        idQuery1 .whereEqualTo("order_id", orderId);
+                        idQuery1.whereEqualTo("order_id", orderId);
                         idQuery1.findInBackground(new FindCallback<AVObject>() {
                             @Override
                             public void done(List<AVObject> list, AVException e) {
@@ -209,7 +225,9 @@ public class CheckOrder extends AppCompatActivity {
                                         public void done(AVCloudQueryResult avCloudQueryResult, AVException e) {
                                             // 如果 e 为空，说明保存成功
 
-                                            getOrder();
+                                                getOrder();
+
+
                                         }
                                     });
                                 }
@@ -218,6 +236,10 @@ public class CheckOrder extends AppCompatActivity {
 
 
                         Toast.makeText(CheckOrder.this,"确认收货",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.show();
+
                     }
                 });
             }

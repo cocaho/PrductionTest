@@ -56,15 +56,18 @@ public class LeanUtil {
         iQuery.findInBackground(new FindCallback<AVObject>() {
             @Override
             public void done(List<AVObject> list, AVException e) {
-                final AVFile file = list.get(list.size() - 1).getAVFile("image");
-                file.getDataInBackground(new GetDataCallback() {
-                    @Override
-                    public void done(byte[] bytes, AVException e) {
-                        // bytes 就是文件的数据流
-                        Bitmap iBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        imageView.setImageBitmap(iBitmap);
-                    }
-                });
+                if(list.size()>0){
+                    final AVFile file = list.get(0).getAVFile("image");
+                    file.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] bytes, AVException e) {
+                            // bytes 就是文件的数据流
+                            Bitmap iBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            imageView.setImageBitmap(iBitmap);
+                        }
+                    });
+                }
+
             }
         });
     }
