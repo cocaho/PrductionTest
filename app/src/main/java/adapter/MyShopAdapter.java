@@ -19,6 +19,7 @@ import com.example.hau.prductiontest.R;
 import com.squareup.picasso.Picasso;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import imp.ShopCartImp;
@@ -31,18 +32,12 @@ import model.ShopModel;
 
 public class MyShopAdapter extends RecyclerView.Adapter  {
 
-    private List<ShopModel>  mShopList;
+    private List<ShopModel>  mShopList = new ArrayList<>();
     Context context;
     ShopCart shopCart;
     ShopCartImp shopCartImp;
 
-    public ShopCartImp getShopCartImp() {
-        return shopCartImp;
-    }
 
-    public void setShopCartImp(ShopCartImp shopCartImp) {
-        this.shopCartImp = shopCartImp;
-    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView productionImg;
@@ -69,9 +64,9 @@ public class MyShopAdapter extends RecyclerView.Adapter  {
 
     }
 
-    public MyShopAdapter(Context context,List<ShopModel> list,ShopCart shopCart){
+    public MyShopAdapter(Context context,ShopCart shopCart){
 
-                 mShopList = list;
+
                  this.context = context;
                  this.shopCart = shopCart;
     }
@@ -151,6 +146,18 @@ public class MyShopAdapter extends RecyclerView.Adapter  {
 
     @Override
     public int getItemCount() {
-        return mShopList.size()== 0 ? 0 : mShopList.size() ;
+        return mShopList.size() ;
+    }
+
+    public void setData(List<ShopModel> list){
+        mShopList = list;
+    }
+
+    public ShopCartImp getShopCartImp() {
+        return shopCartImp;
+    }
+
+    public void setShopCartImp(ShopCartImp shopCartImp) {
+        this.shopCartImp = shopCartImp;
     }
 }

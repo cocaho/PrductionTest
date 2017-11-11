@@ -34,29 +34,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.avos.avoscloud.AVCloudQueryResult;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVOSCloud;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVQuery;
+
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.CloudQueryCallback;
-import com.avos.avoscloud.FindCallback;
-import com.avos.avoscloud.GetDataCallback;
-import com.avos.avoscloud.ProgressCallback;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 
 import adapter.MyShopAdapter;
-import adapter.PayAdapter;
 
-import datas.AppConfig;
 import imp.ShopCartImp;
 import model.ShopCart;
 import model.ShopModel;
@@ -72,7 +59,7 @@ import wiget.ShopCartDialog;
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener,ShopCartImp,ShopCartDialog.ShopCartDialogImp{
 
 
-    private RecyclerView shopList,payList;
+    private RecyclerView shopList;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<ShopModel> list;
     private MyShopAdapter adapter;
@@ -91,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private TextView userTv;
     private Toolbar toolbar;
 
-    private Handler handler = new Handler();
     private long exitTime=0;
     private static int THRESHOLD_OFFSET = 10;
 
@@ -108,8 +94,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         initNav();
     }
 
-
     private void initShop() {
+        shopList.setLayoutManager(new LinearLayoutManager(this));
+        //list = LeanUtil.getData();
+        shopCart = new ShopCart();
+        adapter = new MyShopAdapter(this,shopCart);
+        adapter.setData(list);
+        shopList.setAdapter(adapter);
+        adapter.setShopCartImp(this);
 
         swipeRefreshLayout.setProgressViewEndTarget(false,600);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -118,23 +110,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
+                onRefresh();
             }
         });
 
-        swipeRefreshLayout.postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
 
-            }
-        },2000);
 
-        shopList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        list = LeanUtil.getData(getApplicationContext(),handler);
-        shopCart = new ShopCart();
-        adapter = new MyShopAdapter(getApplicationContext(),list,shopCart);
-        shopList.setAdapter(adapter);
-        adapter.setShopCartImp(this);
 
         shopList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             boolean controlVisible = true;
@@ -206,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         shoppingCartLayout = (FrameLayout) findViewById(R.id.sl_show_layout);
         shopList = (RecyclerView) findViewById(R.id.sl_rv);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.sl_refresh);
-
+        list = new ArrayList<>();
 
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
@@ -457,13 +438,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        handler.post(new Runnable() {
+
+        LeanUtil.refresh(list);
+        adapter.setData(list);
+        adapter.notifyDataSetChanged();
+        swipeRefreshLayout.postDelayed(new Runnable(){
             @Override
             public void run() {
-                LeanUtil.refresh(list);
-                adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
+
             }
-        });
+        },2000);
+
     }
 }

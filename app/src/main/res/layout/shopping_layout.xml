@@ -5,20 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/sl_main_layout">
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_above="@+id/sl_bottom_relative"
-        android:id="@+id/sl_refresh"
-    >    <android.support.v7.widget.RecyclerView
-        android:id="@+id/sl_rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        >
-    </android.support.v7.widget.RecyclerView>
+        android:id="@+id/sl_refresh">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/sl_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="?attr/actionBarSize"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                >
+
+            </android.support.v7.widget.RecyclerView>
 
 </android.support.v4.widget.SwipeRefreshLayout>
 

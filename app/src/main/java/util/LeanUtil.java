@@ -228,7 +228,10 @@ public class LeanUtil {
             @Override
             public void done(List<AVObject> Alist, AVException e) {
 
-                list.clear();
+                if (list!=null){
+                    list.clear();
+                }
+
                 for (AVObject avObject : Alist) {
                     final String name = avObject.getString("title");
                     final int price = avObject.getInt("price");
@@ -420,14 +423,11 @@ public class LeanUtil {
 
     }
 
-    public static List<ShopModel> getData(Context context,Handler handler) {
+    public static List<ShopModel> getData() {
 
 
         final List<ShopModel> datas = new ArrayList<>();
 
-           handler.postDelayed(new Runnable() {
-               @Override
-               public void run() {
                    AVQuery<AVObject> query = new AVQuery<>("Product");
                    query.selectKeys(Arrays.asList("title","price","reserve","description","image"));
                    query.findInBackground(new FindCallback<AVObject>() {
@@ -456,8 +456,6 @@ public class LeanUtil {
                        }
                    });
 
-               }
-           },1500);
 
         return datas;
 
@@ -485,33 +483,4 @@ public class LeanUtil {
         return parseDate;
     }
 
-   public static List<ShopModel> getData2(){
-
-
-       final List<ShopModel> datas = new ArrayList<>();
-
-       AVQuery<AVObject> query = new AVQuery<>("Product");
-       query.selectKeys(Arrays.asList("title","price","reserve","description","image"));
-       query.findInBackground(new FindCallback<AVObject>() {
-           @Override
-           public void done(List<AVObject> list, AVException e) {
-
-               for (AVObject avObject : list) {
-                   final String name = avObject.getString("title");
-                   final int price = avObject.getInt("price");
-                   final int remain = avObject.getInt("reserve");
-                   final String description = avObject.getString("description");
-                   final AVFile file = avObject.getAVFile("image");
-                   String url = file.getUrl();
-                   datas.add(new ShopModel(name, description, url, price, remain));
-
-               }
-           }
-       });
-
-
-
-       return datas;
-
-   }
 }
